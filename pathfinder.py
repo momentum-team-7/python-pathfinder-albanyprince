@@ -1,3 +1,4 @@
+from PIL import Image, ImageColor
 
 # read file and store it as a list of lists
 
@@ -9,7 +10,7 @@ coordinates = []
 with open('elevation_small.txt', 'r') as file:
     for coord_line in file.readlines():
         coordinates.append(coord_line.split())
-    print(coordinates)    
+    # print(coordinates)    
 
 max_el = int(max(map(max, coordinates)))
 print(max_el)
@@ -18,21 +19,31 @@ print(min_el)
 
 el_delta = int((max_el) - (min_el))
 print (el_delta)
-       
-# def get_color(elevation, min, max):
-from PIL import Image, ImageColor
 
-im = Image.new('RGB', (600, 600))
-im.save('elevation_small.png')
-# Image.open('elevation_small.png')
-im.getpixel((0,0))
-for x in range(600):
-    for y in range(600):
-        im.putpixel((x,y), (150,150,150))
-    # find elevation and find grayscale for that elevation that will get passed into line 31
-im.save('putpixel.png')    
- 
-def color_value = ((elevation - min_elevation)/(max_el - min_el)) * 255
-# tuple
-    color_value = (((int(elevation) - min_el)/(el_delta)) * 255)
-    print(int(color_value), int(color_value), int(color_value))
+
+
+# image dimensions 
+# rows = len(coordinates)
+# columns = len(coordinates[0])
+dimensions = len(coordinates), len(coordinates[0])
+# def get_color(elevation, min, max):
+print(dimensions)
+
+def get_color_value(elevation, min_el, max_el): 
+    color_value = (int(elevation) - min_el) / el_delta * 255
+    # color_value = (((int(elevation) - min_el)/(el_delta)) * 255)
+    return(int(color_value), int(color_value), int(color_value))
+
+im = Image.new('RGB', (dimensions))
+    # im.save('elevation_small.png')
+    # Image.open('elevation_small.png')
+    # im.getpixel((0,0))
+for y in range(dimensions[1]):
+    for x in range(dimensions[0]):
+        # breakpoint()        
+        im.putpixel((x,y), get_color_value(coordinates[y][x], min_el, max_el))
+        # for every x and y, it must be grouped together in a tuple
+        # y = list number x = item within the list
+       
+im.save('elevation_small.png')   
+
