@@ -1,4 +1,5 @@
-from PIL import Image, ImageColor
+from PIL import Image, ImageColor, ImageDraw
+# import math
 
 # read file and store it as a list of lists
 
@@ -46,4 +47,14 @@ for y in range(dimensions[1]):
         # y = list number x = item within the list
        
 im.save('elevation_small.png')   
+# draw line
+def draw_path(coordinates):
+    im = Image.open('elevation_small.png')
+    draw = ImageDraw.Draw(im)
+    line_color = (50, 205, 50)
+    draw.line((y1,x1, y2,x2), fill=line_color, width = 10)
+#     # draw.line((y, im.size[1], im.size[0], x), fill=128)
+    
+
+im.save('path.png')    
 
